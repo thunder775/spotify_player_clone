@@ -24,6 +24,7 @@ class SpotifyPlayer extends StatefulWidget {
 
 class _SpotifyPlayerState extends State<SpotifyPlayer> {
   AudioPlayer audioPlugin = AudioPlayer();
+  int i = 0;
   int count = 1;
 
   Song dummySong = Song(
@@ -45,7 +46,7 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
               padding: const EdgeInsets.only(top: 35, left: 24.0, right: 24),
               child: Image(
                 fit: BoxFit.fill,
-                image: NetworkImage(dummySong.imageUrl),
+                image: NetworkImage(allSongs[i].imageUrl),
               ),
             ),
           ),
@@ -56,7 +57,7 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
             child: Container(
                 child: Center(
                     child: Text(
-              dummySong.name,
+              allSongs[i].name,
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 30,
@@ -74,7 +75,7 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
             child: Container(
                 child: Center(
               child: Text(
-                dummySong.artistName,
+                allSongs[i].artistName,
                 style: TextStyle(color: Colors.grey),
               ),
             )),
@@ -99,7 +100,21 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                   child: IconButton(
                     color: Colors.white,
                     icon: Icon(Icons.skip_previous),
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        if (i > 0) {
+                          audioPlugin.pause();
+                          i -= 1;
+                          audioPlugin.play(allSongs[i].playUrl);
+                        } else {
+                          setState(() {
+                            audioPlugin.pause();
+                            i=(allSongs.length-1);
+                            audioPlugin.play(allSongs[i].playUrl);
+                          });
+                        }
+                      });
+                    },
                   ),
                 ),
                 Expanded(
@@ -111,9 +126,9 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                       count += 1;
                       if (count % 2 == 0) {
                         setState(() {
-                          audioPlugin.play(dummySong.playUrl);
+                          audioPlugin.play(allSongs[i].playUrl);
                         });
-                      }else{
+                      } else {
                         setState(() {
                           audioPlugin.pause();
                         });
@@ -125,7 +140,21 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                   child: IconButton(
                     color: Colors.white,
                     icon: Icon(Icons.skip_next),
-                    onPressed: () {},
+                    onPressed: () {
+                      if (i < allSongs.length) {
+                        setState(() {
+                          audioPlugin.pause();
+                          i += 1;
+                          audioPlugin.play(allSongs[i].playUrl);
+                        });
+                      } else {
+                        setState(() {
+                          audioPlugin.pause();
+                          i = 0;
+                          audioPlugin.play(allSongs[i].playUrl);
+                        });
+                      }
+                    },
                   ),
                 ),
                 Expanded(
