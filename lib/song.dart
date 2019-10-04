@@ -10,7 +10,7 @@ class Song {
 }
 
 class SongData {
-  List<Song> songs;
+  List<Song> songs = [];
   static String songJSON = """
 [
   {
@@ -53,7 +53,7 @@ class SongData {
         "width": 64
       }
     ],
-    "name": "Ghungroo (From \"War\")",
+    "name": "Ghungroo (From War)",
     "preview_url": "https://p.scdn.co/mp3-preview/104f294da4d8b1389e6afc9b1e8e24d14eff6841?cid=774b29d4f13844c495f206cafdad9c86"
   },
   {
@@ -129,7 +129,7 @@ class SongData {
         "width": 64
       }
     ],
-    "name": "Bekhayali (From \"Kabir Singh\")",
+    "name": "Bekhayali (From Kabir Singh)",
     "preview_url": "https://p.scdn.co/mp3-preview/5de297ed4b4d56c6d6465f8f6a8f3e2421baaf73?cid=774b29d4f13844c495f206cafdad9c86"
   },
   {
@@ -248,7 +248,7 @@ class SongData {
         "width": 64
       }
     ],
-    "name": "Koka (From \"Khandaani Shafakhana\")",
+    "name": "Koka (From Khandaani Shafakhana)",
     "preview_url": "https://p.scdn.co/mp3-preview/a3ec9a2cd4d8e78fe5bf728d64ab4f8edf597dd1?cid=774b29d4f13844c495f206cafdad9c86"
   },
   {
@@ -347,7 +347,7 @@ class SongData {
         "width": 64
       }
     ],
-    "name": "Duniyaa (From \"Luka Chuppi\")",
+    "name": "Duniyaa (From Luka Chuppi)",
     "preview_url": "https://p.scdn.co/mp3-preview/4efd033217aa13f4625d37f95efa676fb02d4778?cid=774b29d4f13844c495f206cafdad9c86"
   },
   {
@@ -489,7 +489,7 @@ class SongData {
         "width": 64
       }
     ],
-    "name": "Hauli Hauli (From \"De De Pyaar De\")",
+    "name": "Hauli Hauli (From De De Pyaar De)",
     "preview_url": "https://p.scdn.co/mp3-preview/5b9ebff38bb01d33b8bb2ec0716500e14ff164e7?cid=774b29d4f13844c495f206cafdad9c86"
   },
   {
@@ -621,7 +621,7 @@ class SongData {
         "width": 64
       }
     ],
-    "name": "Coca Cola (From \"Luka Chuppi\")",
+    "name": "Coca Cola (From Luka Chuppi)",
     "preview_url": "https://p.scdn.co/mp3-preview/34eb5f1d0ed02f7322c10a8558f05517b4d97085?cid=774b29d4f13844c495f206cafdad9c86"
   },
   {
@@ -737,4 +737,12 @@ class SongData {
 """;
 
   List data = jsonDecode(songJSON);
+
+  SongData() {
+    data.forEach((songMap) {
+
+      songs.add(Song(songMap['name'], songMap['preview_url'],
+          songMap['images'][0]['url'], songMap['artists'][0]['name']));
+    });
+  }
 }
