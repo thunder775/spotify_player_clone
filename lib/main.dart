@@ -26,6 +26,8 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
   AudioPlayer audioPlugin = AudioPlayer();
   int i = 0;
   int count = 1;
+  Icon play = Icon(Icons.play_circle_filled);
+  bool isPlaying;
 
   Song dummySong = Song(
       'Duniyaa',
@@ -53,16 +55,18 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
         ),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(top: 8.0, right: 300, left: 24),
+            padding: const EdgeInsets.only(left: 24.0, top: 5),
             child: Container(
-                child: Center(
-                    child: Text(
-              allSongs[i].name,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontWeight: FontWeight.w800),
-            ))),
+              width: double.infinity,
+              child: Text(
+                allSongs[i].name,
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 28,
+                    fontWeight: FontWeight.w800),
+              ),
+            ),
           ),
           flex: 5,
         ),
@@ -85,12 +89,12 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
         Expanded(
           flex: 20,
           child: Padding(
-            padding: const EdgeInsets.only(bottom: 40.0),
+            padding: const EdgeInsets.only(bottom: 50.0),
             child: Row(
               children: <Widget>[
                 Expanded(
                   child: IconButton(
-                    iconSize: 32,
+                    iconSize: 28,
                     color: Colors.white,
                     icon: Icon(Icons.thumb_up),
                     onPressed: () {},
@@ -109,7 +113,7 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                         } else {
                           setState(() {
                             audioPlugin.pause();
-                            i=(allSongs.length-1);
+                            i = (allSongs.length - 1);
                             audioPlugin.play(allSongs[i].playUrl);
                           });
                         }
@@ -121,15 +125,18 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                   child: IconButton(
                     iconSize: 50,
                     color: Colors.white,
-                    icon: Icon(Icons.play_circle_filled),
+                    icon: play,
                     onPressed: () {
                       count += 1;
                       if (count % 2 == 0) {
                         setState(() {
                           audioPlugin.play(allSongs[i].playUrl);
+                          play = Icon(Icons.play_circle_filled);
                         });
                       } else {
                         setState(() {
+                          play = Icon(Icons.pause_circle_filled);
+
                           audioPlugin.pause();
                         });
                       }
@@ -159,7 +166,7 @@ class _SpotifyPlayerState extends State<SpotifyPlayer> {
                 ),
                 Expanded(
                   child: IconButton(
-                    iconSize: 32,
+                    iconSize: 28,
                     color: Colors.white,
                     icon: Icon(Icons.thumb_down),
                     onPressed: () {},
